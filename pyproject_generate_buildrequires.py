@@ -5,8 +5,8 @@ try:
     from packaging.requirements import Requirement, InvalidRequirement
     from packaging.utils import canonicalize_name, canonicalize_version
 except ImportError:
-    print("python3dist(pytoml)")
     print("python3dist(packaging)")
+    print("python3dist(pytoml)")
     sys.exit(0)
 
 try:
@@ -87,5 +87,9 @@ for requirement in requirements:
 
 # Will need pip to build and install the wheel
 rpm_requirements.add("python3dist(pip)")
+
+# Readd packaging and pytoml to make sure the resulting SRPM has them
+rpm_requirements.add("python3dist(packaging)")
+rpm_requirements.add("python3dist(pytoml)")
 
 print(*sorted(rpm_requirements), sep="\n")
