@@ -68,12 +68,13 @@ for requirement in requirements:
     name = canonicalize_name(requirement.name)
     together = []
     for specifier in requirement.specifier:
-        if specifier.operator == "!=":
-            ### XXX < or >
-            together.append(name)
-            continue
         version = canonicalize_version(specifier.version)
-        together.append(f"python3dist({name}) {specifier.operator} {version}")
+        if specifier.operator == "!=":
+            together.append(
+                f"(python3dist({name}) < {version} or python3dist({name}) >= {version}.0)"
+            )
+        else:
+            together.append(f"python3dist({name}) {specifier.operator} {version}")
     if len(together) == 0:
         rpm_requirements.add(f"python3dist({name})")
     if len(together) == 1:
