@@ -82,4 +82,8 @@ for requirement in requirements:
     elif len(together) > 1:
         rpm_requirements.add(f"({' and '.join(together)})")
 
+
+# Will need pip to build and install the wheel
+rpm_requirements.add("python3dist(pip)")
+
 print(*sorted(rpm_requirements), sep="\n")
