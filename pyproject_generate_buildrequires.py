@@ -53,6 +53,8 @@ if "requires" in pyproject_data.get("build-system"):
     try:
         for requirement in pyproject_data["build-system"]["requires"]:
             add_requirement(requirement)
+    except KeyError:
+        pass
     except Exception as e:
         sys.exit(e)
 
